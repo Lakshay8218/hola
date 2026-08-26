@@ -10,10 +10,17 @@ env = environ.Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, ['*']),
     CORS_ALLOWED_ORIGINS=(list, []),
+    ADMIN_USER_IDS=(str, ''),
+    ADMIN_EMAILS=(str, ''),
+    COMPANY_DASHBOARD_JSON=(str, ''),
 )
 
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+ADMIN_USER_IDS = env('ADMIN_USER_IDS')
+ADMIN_EMAILS = env('ADMIN_EMAILS')
+COMPANY_DASHBOARD_JSON = env('COMPANY_DASHBOARD_JSON')
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = env('SECRET_KEY', default='unsafe-secret-key-for-dev')
