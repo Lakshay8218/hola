@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { getDemoUser, onDemoSessionChange } from "./demoAuth";
 
 export interface SessionUser {
   id: string;
@@ -18,6 +19,11 @@ export function useSession() {
 
   const refresh = useCallback(async (signal?: AbortSignal) => {
     setState((current) => ({ ...current, loading: true, error: "" }));
+    const demoUser = getDemoUser();
+    if (demoUser) {
+      setState({ loading: false, user: demoUser, error: "" });
+      return;
+    }
     try {
       const response = await fetch("/api/session", { headers: { Accept: "application/json" }, signal });
       if (!response.ok) throw new Error("Session service unavailable");
@@ -32,7 +38,8 @@ export function useSession() {
   useEffect(() => {
     const controller = new AbortController();
     void refresh(controller.signal);
-    return () => controller.abort();
+    const removeDemoListener = onDemoSessionChange(() => { void refresh(); });
+    return () => { controller.abort(); removeDemoListener(); };
   }, [refresh]);
   return { ...state, refresh };
 }

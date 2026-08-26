@@ -6,6 +6,7 @@ This product uses [DESIGN.md](./DESIGN.md) for visual decisions.
 
 - Public routes: `/`, `/account`.
 - Authentication is delegated to the hosting platform through `/signin-with-chatgpt` and `/signout-with-chatgpt`.
+- Local development exposes a clearly labelled credential preview. Its fixed administrator credential and temporary sign-up sessions must never be enabled in production, and raw passwords are never persisted.
 - `/api/session` is the canonical session owner.
 - `/api/admin/*` performs the authoritative server-side role check against `ADMIN_USER_IDS` and `ADMIN_EMAILS`.
 - The `/admin` client never embeds company data. Anonymous visitors see a sign-in action; authenticated non-admins receive an access-denied state.

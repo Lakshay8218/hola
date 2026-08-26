@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, ChartLineUp, Clock, MapPin, Package, ShieldCheck, Snowflake, Truck, UsersThree } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { signInHref, signOutHref, useSession } from "../auth";
+import { signOutDemo } from "../demoAuth";
 
 interface DashboardData {
   dataMode: "live" | "preview";
@@ -41,13 +42,18 @@ const devPreview: DashboardData = {
 
 export function AdminPage() {
   const session = useSession();
-  const localPreview = import.meta.env.DEV && new URLSearchParams(window.location.search).get("preview") === "admin";
-  const [data, setData] = useState<DashboardData | null>(localPreview ? devPreview : null);
-  const [loading, setLoading] = useState(!localPreview);
+  const localPreview = import.meta.env.DEV && Boolean(session.user?.isAdmin);
+  const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState(0);
 
   const loadDashboard = useCallback(async (signal?: AbortSignal) => {
-    if (localPreview) return;
+    if (localPreview) {
+      setData(devPreview);
+      setStatus(200);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const response = await fetch("/api/admin/overview", { headers: { Accept: "application/json" }, signal });
@@ -91,7 +97,7 @@ export function AdminPage() {
       <main className="admin-main" id="overview">
         <header className="admin-topbar">
           <div><p className="eyebrow">Operations control</p><h1>Company overview</h1></div>
-          <div className="admin-user"><span>{displayName.slice(0, 1).toUpperCase()}</span><div><strong>{displayName}</strong><small>{session.user?.email || "Local design preview"}</small></div>{!localPreview && <a href={signOutHref("/")}>Sign out</a>}</div>
+          <div className="admin-user"><span>{displayName.slice(0, 1).toUpperCase()}</span><div><strong>{displayName}</strong><small>{session.user?.email || "Local design preview"}</small></div>{localPreview ? <button type="button" onClick={() => { signOutDemo(); window.location.assign("/account"); }}>Sign out</button> : <a href={signOutHref("/")}>Sign out</a>}</div>
         </header>
 
         {data.dataMode === "preview" && <div className="admin-banner" role="status"><Snowflake weight="fill" /><span><strong>Preview data</strong>Connect `COMPANY_DASHBOARD_JSON` to replace these sample operational figures.</span></div>}

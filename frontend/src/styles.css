@@ -524,6 +524,29 @@ p, h1, h2, h3 { margin-top: 0; }
 .auth-card .auth-note { margin: 17px 0 0 !important; text-align: center; font-size: 11px !important; }
 .auth-error { padding: 11px 12px; border: 1px solid #e9b1b1; border-radius: 8px; color: #9c2525 !important; background: #fff3f3; }
 .auth-state { min-height: 340px; display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--ink-600); font-size: 13px; font-weight: 700; }
+.auth-tabs { margin: -14px 0 28px; padding: 4px; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border-light); border-radius: 10px; background: #e8f1f4; }
+.auth-tabs button { min-height: 38px; border: 0; border-radius: 7px; color: var(--ink-600); background: transparent; font-size: 12px; font-weight: 800; }
+.auth-tabs button[aria-selected="true"] { color: var(--ink-900); background: #fff; box-shadow: 0 4px 14px rgba(15,61,76,.09); }
+.auth-demo-label { margin: 0 0 7px !important; display: flex; align-items: center; gap: 7px; color: #087bc7 !important; font-size: 10px !important; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.credential-form { margin-top: 18px; display: grid; gap: 13px; }
+.credential-form label { display: grid; gap: 6px; color: var(--ink-900); font-size: 11px; font-weight: 800; }
+.credential-form input { width: 100%; height: 44px; border: 1px solid #afc8d0; border-radius: var(--control-radius); padding: 0 12px; color: var(--ink-900); background: #fff; transition: border-color .18s ease, box-shadow .18s ease; }
+.credential-form input:focus { border-color: #1687e5; box-shadow: 0 0 0 3px rgba(56,216,255,.13); outline: 0; }
+.credential-form input[aria-invalid="true"] { border-color: #c93636; }
+.password-field { position: relative; display: block; }
+.password-field input { padding-right: 46px; }
+.password-field button { position: absolute; top: 50%; right: 7px; width: 34px; height: 34px; transform: translateY(-50%); display: grid; place-items: center; border: 0; border-radius: 7px; color: #4a6974; background: transparent; font-size: 19px; }
+.password-field button:hover { color: #087bc7; background: #edf8fb; }
+.credential-message { min-height: 31px; margin: 0 !important; color: var(--ink-600) !important; font-size: 10px !important; line-height: 1.45 !important; }
+.credential-message.is-error { color: #a62a2a !important; font-weight: 700; }
+.demo-credentials { margin-top: 17px; padding: 13px; display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px dashed #9acbd6; border-radius: 10px; background: #edf9fb; }
+.demo-credentials > div { display: flex; align-items: flex-start; gap: 9px; min-width: 0; }
+.demo-credentials svg { flex: 0 0 auto; margin-top: 2px; color: #128a67; font-size: 18px; }
+.demo-credentials strong, .demo-credentials code { display: block; }
+.demo-credentials strong { margin-bottom: 4px; color: var(--ink-900); font-size: 10px; }
+.demo-credentials code { color: #48636d; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9px; line-height: 1.45; }
+.demo-credentials > button { flex: 0 0 auto; min-height: 34px; padding: 0 10px; border: 1px solid #75b9c8; border-radius: 7px; color: #075e83; background: #fff; font-size: 9px; font-weight: 800; }
+.demo-credentials > button:hover { border-color: #1687e5; color: #074a6a; }
 .spinner { width: 24px; height: 24px; flex: 0 0 auto; display: inline-block; border: 2px solid rgba(56,216,255,.25); border-top-color: var(--cyan-500); border-radius: 50%; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -549,7 +572,7 @@ p, h1, h2, h3 { margin-top: 0; }
 .admin-user strong, .admin-user small { display: block; }
 .admin-user strong { font-size: 12px; }
 .admin-user small { max-width: 145px; margin-top: 2px; overflow: hidden; color: var(--ink-600); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-.admin-user > a { color: #087bc7; font-size: 11px; font-weight: 750; }
+.admin-user > a, .admin-user > button { border: 0; padding: 0; color: #087bc7; background: transparent; font-size: 11px; font-weight: 750; }
 .admin-banner { margin-top: 28px; min-height: 58px; padding: 12px 17px; display: flex; align-items: center; gap: 12px; border: 1px solid #addce7; border-radius: 12px; color: #2d5967; background: #e3f7fb; font-size: 11px; }
 .admin-banner svg { flex: 0 0 auto; color: #0789d0; font-size: 23px; }
 .admin-banner strong { display: block; margin-bottom: 2px; color: #123b49; font-size: 12px; }
@@ -627,7 +650,7 @@ p, h1, h2, h3 { margin-top: 0; }
   .admin-sidebar-foot { display: none; }
   .admin-topbar { align-items: flex-start; }
   .admin-user { min-width: 0; grid-template-columns: 42px 1fr; }
-  .admin-user > a { grid-column: 2; }
+  .admin-user > a, .admin-user > button { grid-column: 2; justify-self: start; }
 }
 
 @media (max-width: 700px) {
