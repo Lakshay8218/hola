@@ -1,7 +1,7 @@
-import { ArrowLeft, ArrowRight, CheckCircle, Eye, EyeSlash, LockKey, ShieldCheck, Snowflake, UserCircle } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, Eye, EyeSlash, LockKey, ShieldCheck, Snowflake, UserCircle } from "@phosphor-icons/react";
 import { FormEvent, useState } from "react";
 import { signInHref, signOutHref, useSession } from "../auth";
-import { DEMO_ADMIN_EMAIL, DEMO_ADMIN_PASSWORD, signInDemo, signOutDemo, signUpDemo } from "../demoAuth";
+import { signInDemo, signOutDemo, signUpDemo } from "../demoAuth";
 
 export function AccountPage() {
   const { loading, user, error, refresh } = useSession();
@@ -93,12 +93,7 @@ function CredentialForm({ onAuthenticated }: { onAuthenticated: () => void }) {
     onAuthenticated();
   };
 
-  const useAdminCredentials = () => {
-    setMode("login");
-    setEmail(DEMO_ADMIN_EMAIL);
-    setPassword(DEMO_ADMIN_PASSWORD);
-    setMessage("");
-  };
+
 
   return (
     <>
@@ -116,10 +111,7 @@ function CredentialForm({ onAuthenticated }: { onAuthenticated: () => void }) {
         <p className={`credential-message ${message ? "is-error" : ""}`} role="status">{message || (mode === "signup" ? "Use at least 8 characters. This preview does not retain your password." : "Enter your account credentials.")}</p>
         <button className="button button-primary auth-primary" type="submit">{mode === "login" ? "Log in" : "Create account"}<ArrowRight /></button>
       </form>
-      <div className="demo-credentials">
-        <div><CheckCircle weight="fill" /><span><strong>Demo administrator</strong><code>{DEMO_ADMIN_EMAIL}</code><code>{DEMO_ADMIN_PASSWORD}</code></span></div>
-        <button type="button" onClick={useAdminCredentials}>Use credentials</button>
-      </div>
+
     </>
   );
 }
