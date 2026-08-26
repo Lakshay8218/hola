@@ -1,5 +1,6 @@
-import { List, Phone, X } from "@phosphor-icons/react";
+import { List, Phone, UserCircle, X } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
+import { useSession } from "../auth";
 
 interface HeaderProps {
   onQuote: () => void;
@@ -15,6 +16,7 @@ const links = [
 ];
 
 export function Header({ onQuote }: HeaderProps) {
+  const { loading: accountLoading, user } = useSession();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("top");
@@ -78,6 +80,9 @@ export function Header({ onQuote }: HeaderProps) {
 
         <div className="header-actions">
           <a className="phone-link" href="tel:+918950126206"><Phone weight="bold" /> <span>Call +91 89501 26206</span></a>
+          <a className="account-link" href={user?.isAdmin ? "/admin" : "/account"} aria-label={user ? `Open ${user.isAdmin ? "admin panel" : "account"}` : "Log in or sign up"}>
+            <UserCircle weight="duotone" /><span>{accountLoading ? "Account" : user?.isAdmin ? "Admin" : user ? "Account" : "Log in / Sign up"}</span>
+          </a>
           <button className="button button-primary header-quote" onClick={onQuote}>Get Delivery Quote</button>
           <button
             ref={toggleRef}
@@ -99,6 +104,7 @@ export function Header({ onQuote }: HeaderProps) {
             <a key={label} href={href} aria-current={activeSection === href.slice(1) ? "location" : undefined} onClick={() => setOpen(false)}>{label}</a>
           ))}
           <a href="tel:+918950126206" onClick={() => setOpen(false)}>Call +91 89501 26206</a>
+          <a href={user?.isAdmin ? "/admin" : "/account"} onClick={() => setOpen(false)}>{user?.isAdmin ? "Admin panel" : user ? "My account" : "Log in / Sign up"}</a>
           <button className="button button-primary" onClick={() => { setOpen(false); onQuote(); }}>Get Delivery Quote</button>
         </nav>
       )}

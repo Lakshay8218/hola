@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ApplicationsSection } from "./components/ApplicationsSection";
 import { DeliverySection } from "./components/DeliverySection";
 import { FinalCTA } from "./components/FinalCTA";
@@ -11,8 +11,24 @@ import { ProductSection } from "./components/ProductSection";
 import { QuoteModal } from "./components/QuoteModal";
 import { TrustStrip } from "./components/TrustStrip";
 import { useMotion } from "./useMotion";
+import { AccountPage } from "./components/AccountPage";
+import { AdminPage } from "./components/AdminPage";
 
 export function App() {
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
+  useEffect(() => {
+    document.title = path === "/admin"
+      ? "Admin operations | Dry Ice Supply India"
+      : path === "/account"
+        ? "Account access | Dry Ice Supply India"
+        : "Dry Ice Supply India | R.S Trader";
+  }, [path]);
+  if (path === "/account") return <AccountPage />;
+  if (path === "/admin") return <AdminPage />;
+  return <HomePage />;
+}
+
+function HomePage() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const openQuote = useCallback(() => setQuoteOpen(true), []);
   const closeQuote = useCallback(() => setQuoteOpen(false), []);
